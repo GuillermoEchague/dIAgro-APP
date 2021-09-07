@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:diagro/User/domain/repository/auth_repository.dart';
+import 'package:diagro/User/domain/responses/reset_password_response.dart';
 import 'package:diagro/User/domain/responses/sign_in_response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -49,6 +50,16 @@ class AuthRepositoryImpl implements AuthRepository {
         stringToSignInError(e.code),
         null,
       );
+    }
+  }
+
+  @override
+  Future<ResetPasswordResponse> sendResetPasswordLink(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return ResetPasswordResponse.ok;
+    } on FirebaseAuthException catch (e) {
+      return stringToResetPasswordResponse(e.code);
     }
   }
 }
