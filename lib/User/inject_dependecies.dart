@@ -1,5 +1,7 @@
+import 'package:diagro/User/data/repositories_impl/account_repository_impl.dart';
 import 'package:diagro/User/data/repositories_impl/auth_repository_impl.dart';
 import 'package:diagro/User/data/repositories_impl/sign_up_repository_impl.dart';
+import 'package:diagro/User/domain/repository/account_repository.dart';
 import 'package:diagro/User/domain/repository/auth_repository.dart';
 import 'package:diagro/User/domain/repository/sign_up_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,5 +17,8 @@ void injectDependencies() {
     () => SignUpRepositoryImpl(
       FirebaseAuth.instance,
     ),
+  );
+  Get.i.lazyPut<AccountRepository>(
+    () => AccountRepositoryImpl(FirebaseAuth.instance),
   );
 }

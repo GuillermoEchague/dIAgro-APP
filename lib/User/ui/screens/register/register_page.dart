@@ -1,3 +1,4 @@
+import 'package:diagro/User/ui/global_controllers/session_controller.dart';
 import 'package:diagro/User/ui/screens/register/controller/register_controller.dart';
 import 'package:diagro/User/ui/screens/register/controller/register_state.dart';
 import 'package:diagro/User/ui/screens/register/utils/send_register_form.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/state.dart';
 
 final registerProvider = StateProvider<RegisterController, RegisterState>(
-  (_) => RegisterController(),
+  (_) => RegisterController(sessionProider.read),
 );
 
 class RegisterPage extends StatelessWidget {
