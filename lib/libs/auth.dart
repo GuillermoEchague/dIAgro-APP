@@ -36,7 +36,7 @@ class Auth {
       // ignore: avoid_print
       print("username: ${user!.displayName} ");
     } catch (e) {
-      print(e);
+      // print(e);
 
       return null;
     }

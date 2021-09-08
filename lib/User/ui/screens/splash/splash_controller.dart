@@ -1,20 +1,28 @@
 import 'package:diagro/User/domain/repository/auth_repository.dart';
+import 'package:diagro/User/ui/global_controllers/session_controller.dart';
 import 'package:diagro/User/ui/routes/routes.dart';
 import 'package:flutter_meedu/meedu.dart';
 
 class SplashController extends SimpleNotifier {
-  final _authRepository = Get.i.find<AuthRepository>();
+  final SessionController _sessionController;
+  final AuthRepository _authRepository = Get.i.find();
 
   String? _routeName;
   String? get routeName => _routeName;
 
-  SplashController() {
+  SplashController(this._sessionController) {
     _init();
   }
 
   void _init() async {
     final user = await _authRepository.user;
-    _routeName = user != null ? Routes.HOME : Routes.LOGIN;
+    if (user != null) {
+      _routeName = Routes.HOME;
+      _sessionController.setUser(user);
+    } else {
+      _routeName = Routes.LOGIN;
+    }
+
     notify();
   }
 }

@@ -10,6 +10,8 @@ class SignUpResponse {
 
 parseStringToSignUpError(String text) {
   switch (text) {
+    case "too-many-request":
+      return SignUpError.tooManyRequest;
     case "email-already-in-use":
       return SignUpError.emailAlreadyInUse;
     case "weak-password":
@@ -22,6 +24,7 @@ parseStringToSignUpError(String text) {
 }
 
 enum SignUpError {
+  tooManyRequest,
   emailAlreadyInUse,
   weakPassword,
   unknown,

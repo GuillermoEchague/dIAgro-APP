@@ -1,10 +1,11 @@
+import 'package:diagro/User/ui/global_controllers/session_controller.dart';
 import 'package:diagro/User/ui/screens/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
 
 final splashProvider = SimpleProvider(
-  (_) => SplashController(),
+  (_) => SplashController(sessionProider.read),
   autoDispose: true,
 );
 

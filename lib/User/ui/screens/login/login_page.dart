@@ -1,3 +1,4 @@
+import 'package:diagro/User/ui/global_controllers/session_controller.dart';
 import 'package:diagro/User/ui/routes/routes.dart';
 import 'package:diagro/User/ui/screens/login/utils/send_login_form.dart';
 import 'package:diagro/User/ui/widgets/custom_input_field.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_meedu/state.dart';
 import 'controller/login_controller.dart';
 
 final loginProvider = SimpleProvider(
-  (_) => LoginController(),
+  (_) => LoginController(sessionProider.read),
 );
 
 class LoginPage extends StatelessWidget {
@@ -61,15 +62,27 @@ class LoginPage extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => sendLoginForm(context),
-                      child: const Text("Sign In"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () =>
+                              router.pushNamed(Routes.RESET_PASSWORD),
+                          child: const Text("Forgot Password?"),
+                        ),
+                        const SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () => sendLoginForm(context),
+                          child: const Text("Sign In"),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () => router.pushNamed(Routes.REGISTER),
                       child: const Text("Sign Up"),
-                    )
+                    ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),
