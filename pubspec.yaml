@@ -35,6 +35,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_meedu: ^4.3.0
   freezed: ^0.14.5
+  google_fonts: ^2.1.0
+  shared_preferences: ^2.0.8
 
 
 
@@ -91,6 +93,10 @@ flutter:
           weight: 200
         - asset: assets/fonts/Roboto-Regular.ttf
           weight: 300
+    - family: MeeduIcons
+      fonts: 
+        - asset: assets/fonts/MeeduIcons.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

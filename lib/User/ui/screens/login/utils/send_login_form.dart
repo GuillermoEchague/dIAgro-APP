@@ -1,6 +1,5 @@
-import 'package:diagro/User/domain/responses/sign_in_response.dart';
-import 'package:diagro/User/ui/routes/routes.dart';
-import 'package:diagro/User/ui/widgets/dialogs/dialogs.dart';
+import 'package:diagro/User/ui/screens/login/utils/handle_login_response.dart';
+
 import 'package:diagro/User/ui/widgets/dialogs/progress_dialog.dart';
 
 import '../login_page.dart' show loginProvider;
@@ -12,40 +11,8 @@ Future<void> sendLoginForm(BuildContext context) async {
   final isValidForm = controller.formKey.currentState!.validate();
   if (isValidForm) {
     ProgressDialog.show(context);
-    final response = await controller.submit();
+    final response = await controller.signInWithEmailAndPassword();
     router.pop();
-    if (response.error != null) {
-      String errorMessage = "";
-      switch (response.error) {
-        case SignInError.networkRequestFailed:
-          errorMessage = "network Request Failed";
-          break;
-        case SignInError.userDisabled:
-          errorMessage = "user Disabled";
-          break;
-        case SignInError.userNotFound:
-          errorMessage = "user Not Found";
-          break;
-        case SignInError.wrongPassword:
-          errorMessage = "wrong Password";
-          break;
-        case SignInError.tooManyRequest:
-          errorMessage = "too Many Request";
-          break;
-        case SignInError.unknown:
-        default:
-          errorMessage = "unknown error";
-          break;
-      }
-      Dialogs.alert(
-        context,
-        title: "ERROR",
-        content: errorMessage,
-      );
-    } else {
-      router.pushReplacementNamed(
-        Routes.HOME,
-      );
-    }
+    handleLoginResponse(context, response);
   }
 }

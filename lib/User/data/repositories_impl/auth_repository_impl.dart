@@ -4,14 +4,20 @@ import 'package:diagro/User/domain/repository/auth_repository.dart';
 import 'package:diagro/User/domain/responses/reset_password_response.dart';
 import 'package:diagro/User/domain/responses/sign_in_response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final FirebaseAuth _auth;
+  final GoogleSignIn _googleSignIn;
   User? _user;
 
   final Completer<void> _completer = Completer();
 
-  AuthRepositoryImpl(this._auth) {
+  AuthRepositoryImpl({
+    required FirebaseAuth firebaseAuth,
+    required GoogleSignIn googleSignIn,
+  })  : _auth = firebaseAuth,
+        _googleSignIn = googleSignIn {
     _init();
   }
 
@@ -38,18 +44,19 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<SignInResponse> signInWithEmailAndPssword(
+  Future<SignInResponse> signInWithEmailAndPassword(
       String email, String password) async {
     try {
       final userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       final user = userCredential.user!;
-      return SignInResponse(null, user);
-    } on FirebaseAuthException catch (e) {
       return SignInResponse(
-        stringToSignInError(e.code),
-        null,
+        user: user,
+        providerId: userCredential.credential?.providerId,
+        error: null,
       );
+    } on FirebaseAuthException catch (e) {
+      return getSignInError(e);
     }
   }
 
@@ -60,6 +67,38 @@ class AuthRepositoryImpl implements AuthRepository {
       return ResetPasswordResponse.ok;
     } on FirebaseAuthException catch (e) {
       return stringToResetPasswordResponse(e.code);
+    }
+  }
+
+  @override
+  Future<SignInResponse> signInWithGoogle() async {
+    try {
+      final account = await _googleSignIn.signIn();
+      if (account == null) {
+        return SignInResponse(
+          error: SignInError.cancelled,
+          user: null,
+          providerId: null,
+        );
+      }
+
+      final googleAuth = await account.authentication;
+
+      final OAuthCredential oAuthCredential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+        accessToken: googleAuth.accessToken,
+      );
+
+      final userCredential = await _auth.signInWithCredential(
+        oAuthCredential,
+      );
+      return SignInResponse(
+        error: null,
+        user: userCredential.user,
+        providerId: userCredential.credential?.providerId,
+      );
+    } on FirebaseAuthException catch (e) {
+      return getSignInError(e);
     }
   }
 }

@@ -6,9 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class AuthRepository {
   Future<User?> get user;
   Future<void> signOut();
-  Future<SignInResponse> signInWithEmailAndPssword(
+  Future<SignInResponse> signInWithEmailAndPassword(
     String email,
     String password,
   );
+
+  Future<SignInResponse> signInWithGoogle();
+
   Future<ResetPasswordResponse> sendResetPasswordLink(String email);
 }
