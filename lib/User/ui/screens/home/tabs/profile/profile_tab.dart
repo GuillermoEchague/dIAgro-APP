@@ -1,11 +1,34 @@
 import 'package:diagro/User/my_app.dart';
 import 'package:diagro/User/ui/global_controllers/session_controller.dart';
+import 'package:diagro/User/ui/widgets/dialogs/dialogs.dart';
+import 'package:diagro/User/ui/widgets/dialogs/progress_dialog.dart';
+import 'package:diagro/User/ui/widgets/dialogs/show_input_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/state.dart';
 
 class ProfileTab extends ConsumerWidget {
   const ProfileTab({Key? key}) : super(key: key);
+  void _updateDisplayName(BuildContext context) async {
+    final sessionController = sessionProider.read;
+    final value = await showInputDialog(
+      context,
+      initialValue: sessionController.user!.displayName ?? "",
+    );
+    if (value != null) {
+      ProgressDialog.show(context);
+      final user = await sessionController.updateDisplayName(value);
+      Navigator.pop(context);
+      if (user == null) {
+        Dialogs.alert(
+          context,
+          title: "ERROR",
+          content: "Check your internet connection",
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context, watch) {
     final sessionController = watch(sessionProider);
@@ -48,7 +71,7 @@ class ProfileTab extends ConsumerWidget {
         LabelButton(
           label: "Display Name",
           value: displayName,
-          onPressed: () {},
+          onPressed: () => _updateDisplayName(context),
         ),
         LabelButton(
           label: "Email",

@@ -1,6 +1,5 @@
 import 'package:diagro/User/domain/responses/reset_password_response.dart';
 import 'package:diagro/User/domain/responses/sign_in_response.dart';
-import 'package:diagro/User/ui/screens/reset_password/controller/reset_password_contorller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {

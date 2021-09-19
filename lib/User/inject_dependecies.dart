@@ -3,11 +3,13 @@ import 'package:diagro/User/data/repositories_impl/auth_repository_impl.dart';
 import 'package:diagro/User/data/repositories_impl/sign_up_repository_impl.dart';
 import 'package:diagro/User/domain/repository/account_repository.dart';
 import 'package:diagro/User/domain/repository/auth_repository.dart';
+//import 'package:diagro/User/domain/repository/preferences_repository.dart';
 import 'package:diagro/User/domain/repository/sign_up_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 void injectDependencies() {
   Get.i.lazyPut<AuthRepository>(
@@ -23,6 +25,8 @@ void injectDependencies() {
     ),
   );
   Get.i.lazyPut<AccountRepository>(
-    () => AccountRepositoryImpl(FirebaseAuth.instance),
+    () => AccountRepositoryImpl(
+      FirebaseAuth.instance,
+    ),
   );
 }
