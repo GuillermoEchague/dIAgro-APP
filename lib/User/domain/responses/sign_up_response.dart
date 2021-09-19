@@ -1,4 +1,3 @@
-import 'package:diagro/User/domain/responses/sign_in_response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpResponse {
