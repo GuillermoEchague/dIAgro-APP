@@ -1,11 +1,14 @@
 import 'package:diagro/User/my_app.dart';
 import 'package:diagro/User/ui/global_controllers/session_controller.dart';
+import 'package:diagro/User/ui/routes/routes.dart';
+import 'package:diagro/User/ui/screens/home/tabs/profile/widgets/label_button.dart';
 import 'package:diagro/User/ui/widgets/dialogs/dialogs.dart';
 import 'package:diagro/User/ui/widgets/dialogs/progress_dialog.dart';
 import 'package:diagro/User/ui/widgets/dialogs/show_input_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/state.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 class ProfileTab extends ConsumerWidget {
   const ProfileTab({Key? key}) : super(key: key);
@@ -81,58 +84,34 @@ class ProfileTab extends ConsumerWidget {
           label: "Email verified",
           value: user.emailVerified ? "YES" : "NO",
         ),
-        CupertinoSwitch(
-          value: theme.isDark,
-          onChanged: (_) {
-            theme.toggle();
-          },
-        )
-      ],
-    );
-  }
-}
-
-class LabelButton extends StatelessWidget {
-  final String label, value;
-  final VoidCallback? onPressed;
-  const LabelButton({
-    Key? key,
-    required this.label,
-    required this.value,
-    this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onPressed,
-      contentPadding: const EdgeInsets.symmetric(
-        vertical: 0,
-        horizontal: 20,
-      ),
-      leading: Text(
-        label,
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            value,
-            style: const TextStyle(
-              fontWeight: FontWeight.w300,
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 30,
           ),
-          const SizedBox(width: 5),
-          Icon(
-            Icons.chevron_right_rounded,
-            size: 22,
-            color: onPressed != null ? Colors.black45 : Colors.transparent,
-          )
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Dark Mode"),
+              CupertinoSwitch(
+                value: theme.isDark,
+                onChanged: (_) {
+                  theme.toggle();
+                },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 50),
+        LabelButton(
+          label: "Sign Out",
+          value: "",
+          onPressed: () async {
+            await sessionProider.read.signOut();
+            router.pushNamedAndRemoveUntil(Routes.LOGIN);
+          },
+        ),
+      ],
     );
   }
 }

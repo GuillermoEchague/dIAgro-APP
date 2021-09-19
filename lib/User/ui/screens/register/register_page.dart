@@ -8,6 +8,7 @@ import 'package:diagro/User/utils/email_validator.dart';
 import 'package:diagro/User/utils/name_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_meedu/screen_utils.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/state.dart';
@@ -34,7 +35,6 @@ class RegisterPage extends StatelessWidget {
       provider: registerProvider,
       builder: (_, controller) {
         return Scaffold(
-          backgroundColor: Colors.white,
           appBar: appBar,
           body: ListView(
             children: [
@@ -52,6 +52,17 @@ class RegisterPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          const Text(
+                            "Sign Up",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
                           CustomInputField(
                             label: "Name",
                             onChanged: controller.onNameChanged,

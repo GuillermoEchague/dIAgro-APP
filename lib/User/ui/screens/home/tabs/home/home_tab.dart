@@ -13,24 +13,7 @@ class HomeTab extends StatelessWidget {
     return SizedBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Consumer(
-            builder: (_, watch, __) {
-              final user = watch(sessionProider).user!;
-              return Text(user.displayName ?? '');
-            },
-          ),
-          const Text("HOME PAGE"),
-          const SizedBox(height: 20),
-          CupertinoButton(
-            color: Colors.blue,
-            child: const Text("Sign Out"),
-            onPressed: () async {
-              await sessionProider.read.signOut();
-              router.pushNamedAndRemoveUntil(Routes.LOGIN);
-            },
-          )
-        ],
+        children: [],
       ),
     );
   }
