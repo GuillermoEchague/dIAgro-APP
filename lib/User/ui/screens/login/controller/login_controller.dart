@@ -39,4 +39,12 @@ class LoginController extends SimpleNotifier {
     }
     return response;
   }
+
+  Future<SignInResponse> signInWithFacebook() async {
+    final response = await _authRepository.signInWithFacebook();
+    if (response.error == null) {
+      _sessionController.setUser(response.user!);
+    }
+    return response;
+  }
 }

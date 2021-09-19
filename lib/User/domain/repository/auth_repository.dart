@@ -12,5 +12,6 @@ abstract class AuthRepository {
 
   Future<SignInResponse> signInWithGoogle();
 
+  Future<SignInResponse> signInWithFacebook();
   Future<ResetPasswordResponse> sendResetPasswordLink(String email);
 }

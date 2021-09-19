@@ -5,14 +5,13 @@ import 'package:diagro/User/data/repositories_impl/sign_up_repository_impl.dart'
 import 'package:diagro/User/domain/repository/account_repository.dart';
 import 'package:diagro/User/domain/repository/auth_repository.dart';
 import 'package:diagro/User/domain/repository/preferences_repository.dart';
-//import 'package:diagro/User/domain/repository/preferences_repository.dart';
 import 'package:diagro/User/domain/repository/sign_up_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> injectDependencies() async {
   final preferences = await SharedPreferences.getInstance();
@@ -20,6 +19,7 @@ Future<void> injectDependencies() async {
     () => AuthRepositoryImpl(
       firebaseAuth: FirebaseAuth.instance,
       googleSignIn: GoogleSignIn(),
+      facebookAuth: FacebookAuth.i,
     ),
   );
 

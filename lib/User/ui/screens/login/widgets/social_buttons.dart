@@ -1,4 +1,5 @@
 import 'package:diagro/User/ui/icons/meedu_icons.dart';
+import 'package:diagro/User/ui/screens/login/utils/sign_in_with_faceook.dart';
 import 'package:diagro/User/ui/screens/login/utils/sign_in_with_google.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class SocialButtons extends StatelessWidget {
       children: [
         SocialButton(
           color: Colors.blueAccent,
-          onPressed: () {},
+          onPressed: () => signInWithFacebook(context),
           iconData: MeeduIcons.facebook,
         ),
         const SizedBox(
